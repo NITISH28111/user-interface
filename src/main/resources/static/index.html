@@ -1,0 +1,28 @@
+<form id="registrationForm">
+    <label for="userName">Username:</label>
+    <input type="text" id="userName" name="userName" required>
+    <button type="submit">Register</button>
+  </form>
+  <p id="responseMessage"></p>
+  
+  <script>
+    document.getElementById("registrationForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // stop normal form submission
+  
+      const formData = { userName: document.getElementById("userName").value };
+  
+      fetch("/ftp/registration", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      })
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("responseMessage").innerText = data;
+      })
+      .catch(error => {
+        document.getElementById("responseMessage").innerText = "Error occurred";
+      });
+    });
+  </script>
+  
